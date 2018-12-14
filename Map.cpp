@@ -1,5 +1,8 @@
 #include "Map.h"
+#include "Flight.h"
+#include <climits>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 
 using namespace std;
@@ -15,7 +18,7 @@ Map::Map(string filename){
 		for(string s; iss >> s;){
 			path.push_back(s);
 		}
-		flights.push_back(new Flight(flights[0], flights[1], flights[2], flights[3], flights[4]));
+		flights.push_back(Flight(path[0], path[1], path[2], path[3], path[4]));
 	}
 
 	//Sets up key
@@ -56,6 +59,7 @@ list<Flight> Map::anypath(int start, int end){
 vector<int> shortestTime;
 	vector<bool> visitedNodes;
 	vector<Flight> prevFlight;
+	int length;
 	for(int i = 0; i < cities.size(); i++){
 		if(i == start){
 			shortestTime.push_back(0);
@@ -64,8 +68,10 @@ vector<int> shortestTime;
 			shortestTime.push_back(INT_MAX);
 			visitedNodes.push_back(false);
 		}
-		prevFlight.push_back(NULL);
+		length = i;
+		//prevFlight.push_back(NULL);
 	}
+	prevFlight.resize(length);
 
 	for(int i = 0; i < cities.size() ; i++){
 		int earliest = INT_MAX;
@@ -110,7 +116,7 @@ vector<int> shortestTime;
 	answer.push_front(prevFlight[end]);
 	int g;
 	while(findCity(answer.front().from) != start){
-		g = answer.front().from;
+		g = findCity(answer.front().from);
 		answer.push_front(prevFlight[g]);
 	}
 
@@ -124,6 +130,7 @@ list<Flight> Map::fastpath(int start, int end){
 	vector<int> shortestTime;
 	vector<bool> visitedNodes;
 	vector<Flight> prevFlight;
+	int length;
 	for(int i = 0; i < cities.size(); i++){
 		if(i == start){
 			shortestTime.push_back(0);
@@ -132,8 +139,10 @@ list<Flight> Map::fastpath(int start, int end){
 			shortestTime.push_back(INT_MAX);
 			visitedNodes.push_back(false);
 		}
-		prevFlight.push_back(NULL);
+		length = i;
+		//prevFlight.push_back(NULL);
 	}
+	prevFlight.resize(length);
 
 	for(int i = 0; i < cities.size() ; i++){
 		int earliest = INT_MAX;
@@ -178,13 +187,35 @@ list<Flight> Map::fastpath(int start, int end){
 	answer.push_front(prevFlight[end]);
 	int g;
 	while(findCity(answer.front().from) != start){
-		g = answer.front().from;
+		g = findCity(answer.front().from);
 		answer.push_front(prevFlight[g]);
 	}
 
 	return answer;
 	// FIGURE OUT RETURN VALUE
 
+}
+
+void Map::translate(list<Flight> t){
+	int totalcost;
+	int starttime;
+	int endtime;
+	cout << "The flights you will take are: " << endl;
+	for(Flight i : t){
+		cout << i.from << endl;
+		cout << " (" << endl;
+		cout << i.depart << endl;
+		cout << ") -> " << endl;
+		cout << i.to << endl;
+		cout << " (" << endl;
+		cout << i.arrive << endl;
+		cout << ")  $" << endl;
+		cout << i.price << endl;
+		cout << "\n" << endl;
+		totalcost += i.price;
+	}
+	cout << "total price: " << endl;
+	cout << totalcost << endl;
 }
 
 

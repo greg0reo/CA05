@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Flight::Flight(string f, string t, string d, string, a, string p){
+Flight::Flight(string f, string t, string d, string a, string p){
 	this->from = f;
 	this->to = t;
 
@@ -28,7 +28,7 @@ Flight::Flight(string f, string t, string d, string, a, string p){
 		i++;
 	}
 
-	int i = 1;
+	i = 1;
 	for (char& c : a){
 		if(i = 1){
 			this->arrive += (1000 * (c - '0'));
