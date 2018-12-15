@@ -9,11 +9,12 @@
 
 class Map{
 private:
+public:
+	
 	std::vector<string> cities;
 	std::vector<Flight> flights;
 	std::vector<vector<vector<Flight>>> schedule;
 
-public:
 	Map(string filename);
 	list<Flight> anypath(int start, int end);
 	list<Flight> fastpath(int start, int end);
@@ -23,7 +24,7 @@ public:
 	bool compare(Flight n);
 	int findCity(string n);
 	int findPrice(list<Flight> n);
-	bool NodesRemain(vector<bool> x);
+	bool NodesRemain(vector<int> x);
 };
 
 #endif

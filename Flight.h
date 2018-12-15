@@ -13,7 +13,7 @@ class Flight{
 		std::string to;
 		int depart;
 		int arrive;
-		int price;
+		float price;
 
 		Flight(string f, string t, string d, string a, string p);
 		

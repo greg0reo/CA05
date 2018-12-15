@@ -13,7 +13,7 @@ Map::Map(string filename){
 	string line;
 	//vector<string> path;
 
-	//cout << "file taken" << endl;
+	cout << "file taken" << endl;
 
 	while(getline(file, line)){
 		//path.resize(0);
@@ -25,7 +25,7 @@ Map::Map(string filename){
 		flights.push_back(Flight(path[0], path[1], path[2], path[3], path[4]));
 	}
 
-	//cout << "Flights" << endl;
+	cout << "Flights" << endl;
 	
 	//Sets up key
 	for(Flight n : flights){
@@ -37,16 +37,9 @@ Map::Map(string filename){
 	cout << "Key" << endl;
 
 	//Sets up matrix
-	//schedule[cities.size()][cities.size()];
-	schedule.resize(cities.size());
-	for(int i = 0; i < cities.size(); i++){
-		schedule[i].resize(cities.size());
-	}
-	for(Flight x : flights){
-//		cout << "1" << endl;
-//		schedule.at(findCity(x.from)).at(findCity(x.to)).push_back(x);
+	schedule[cities.size()][cities.size()];
+c++ dollars and cents to int	for(Flight x : flights){
 		schedule[findCity(x.from)][findCity(x.to)].push_back(x);
-//		cout << "2" << endl;
 	}
 	cout << "Map" << endl;
 }
@@ -63,7 +56,6 @@ bool Map::compare(Flight n){
 int Map::findCity(string n){
 	for(int i = 0; i < cities.size(); i++){
 		if(n == cities[i]){
-//			cout << "city found" << endl;
 			return i;
 		}
 	}
@@ -72,26 +64,23 @@ int Map::findCity(string n){
 
 
 list<Flight> Map::anypath(int start, int end){
-	cout << "anypath" << endl;
-	vector<int> shortestTime;
-	vector<int> visitedNodes;
+vector<int> shortestTime;
+	vector<bool> visitedNodes;
 	vector<Flight> prevFlight;
 	int length;
 	for(int i = 0; i < cities.size(); i++){
 		if(i == start){
 			shortestTime.push_back(0);
-			visitedNodes.push_back(2);
+			visitedNodes.push_back(true);
 		}else{
 			shortestTime.push_back(INT_MAX);
-			visitedNodes.push_back(0);
+			visitedNodes.push_back(false);
 		}
 		length = i;
 		//prevFlight.push_back(NULL);
 		prevFlight.push_back(Flight(cities[start], cities[i], "999999", "999999", "999999"));
 	}
 	//prevFlight.resize(length);
-	cout << start << endl;
-	cout << end << endl;
 
 	for(int i = 0; i < cities.size() ; i++){
 		int earliest = INT_MAX;
@@ -100,37 +89,29 @@ list<Flight> Map::anypath(int start, int end){
 				earliest = schedule[start][i].at(j).arrive;
 				shortestTime[i] = earliest;
 				prevFlight[i] = schedule[start][i].at(j);
-				visitedNodes[i] = 1;
 			}
 		}
 	}
-//	visitedNodes[start] = true;
-	
-	cout << "Behind second for loop" <<endl;
+	visitedNodes[start] = true;
 
 	while(NodesRemain(visitedNodes)){
 		int closest;
 		int distance = INT_MAX;
 		for(int i = 0; i < cities.size(); i++){
-			if(visitedNodes[i] == 1 && shortestTime[i] < distance){
+			if(visitedNodes[i] == false || shortestTime[i] < distance){
 				closest = i;
 				distance = shortestTime[i];
 			}
 		}
-		
-		cout << "inbetweener" << endl;
 
 		int arrivalTime = prevFlight[closest].arrive;
-		visitedNodes[closest] = 2;
 		for(int i = 0; i < cities.size(); i++){
-			int earliest = shortestTime[i];
 			for(int j = 0; j < schedule[closest][i].size(); j++){
-				//int earliest = shortestTime[i];
-				if(schedule[closest][i].at(j).arrive < earliest){  // || schedule[closest][i].at(j).depart > arrivalTime){
+				int earliest = shortestTime[i];
+				if(schedule[closest][i].at(j).arrive < earliest || schedule[closest][i].at(j).depart > arrivalTime){
 					earliest = schedule[closest][i].at(j).arrive;
 					shortestTime[i] = earliest;
 					prevFlight[i] = schedule[closest][i].at(j);
-					visitedNodes[i] = 1;
 					//visitedNodes[i] = false;
 				}
 			}
@@ -138,14 +119,12 @@ list<Flight> Map::anypath(int start, int end){
 
 	}
 
-	cout << "After massive while loop" <<endl;
 	// RETURN VALUE
 
 	list<Flight> answer;
 	answer.push_front(prevFlight[end]);
 	int g;
 	while(findCity(answer.front().from) != start){
-		cout << g <<endl;
 		g = findCity(answer.front().from);
 		answer.push_front(prevFlight[g]);
 	}
@@ -157,7 +136,7 @@ list<Flight> Map::anypath(int start, int end){
 }
 
 list<Flight> Map::fastpath(int start, int end){
-/*	vector<int> shortestTime;
+	vector<int> shortestTime;
 	vector<bool> visitedNodes;
 	vector<Flight> prevFlight;
 	int length;
@@ -224,7 +203,7 @@ list<Flight> Map::fastpath(int start, int end){
 
 	return answer;
 	// FIGURE OUT RETURN VALUE
-*/
+
 }
 
 void Map::translate(list<Flight> t){
@@ -250,9 +229,9 @@ void Map::translate(list<Flight> t){
 }
 
 
-bool Map::NodesRemain(vector<int> x){
-	for(int i : x){
-		if(i == 1){
+bool Map::NodesRemain(vector<bool> x){
+	for(bool i : x){
+		if(i == false){
 			return true;
 		}
 	}

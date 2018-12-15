@@ -1,7 +1,7 @@
-all: Flight
+all: Driver
 
-Flight: Flight.o Map.o
-	g++ Flight.o Map.o -o File.exe
+Driver: Driver.o Flight.o Map.o
+	g++ Driver.o Flight.o Map.o -o Driver.exe
 
 Driver.o: Driver.cpp
 	g++ -g -c Driver.cpp
