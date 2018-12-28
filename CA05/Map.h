@@ -12,7 +12,7 @@ private:
 public:
 	
 	std::vector<string> cities;
-	std::vector<Flight> flights;
+	std::vector<Flight *> flights;
 	std::vector<vector<vector<Flight>>> schedule;
 
 	Map(string filename);

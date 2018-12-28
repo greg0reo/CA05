@@ -10,16 +10,16 @@ Flight::Flight(string f, string t, string d, string a, string p){
 
 	// In this part, I store the time as an integer in military time
 	// since I never do any operations (besides comparing) on the time, this is ok
-	this->depart += (((d.at(0)) - '0') * 1000);
+/*	this->depart += (((d.at(0)) - '0') * 1000);
 	this->depart += (((d.at(1)) - '0') * 100);
 	this->depart += (((d.at(3)) - '0') * 10);
 	this->depart += ((d.at(4)) - '0');
 	if( (d.at(5)) == 'p'){
 		this->depart += 1200;
 	}
-
+*/
 	int i = 1;
-/*	for (char& c : d){
+	for (char& c : d){
 		if(i == 1){
 			this->depart += (1000 * (c - '0'));
 		}
@@ -37,8 +37,8 @@ Flight::Flight(string f, string t, string d, string a, string p){
 		}
 		i++;
 	}
-*/
 
+/*
 	this->arrive += (((a.at(0)) - '0') * 1000);
 	this->arrive += (((a.at(1)) - '0') * 100);
 	this->arrive += (((a.at(3)) - '0') * 10);
@@ -47,7 +47,7 @@ Flight::Flight(string f, string t, string d, string a, string p){
 		this->depart += 1200;
 	}
 
-/*
+*/
 
 
 	i = 1;
@@ -68,7 +68,7 @@ Flight::Flight(string f, string t, string d, string a, string p){
 			this->arrive += 1200;
 		}
 		i++;
-	}
+
 */
 	i = 1;
 	string p2;

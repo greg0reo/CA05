@@ -13,6 +13,10 @@ int main(int argc, char *argv[]){
 	cin >> place;
 	Map Graph = Map(place);
 
+	cout << Graph.schedule[0][1][0].arrive << endl;
+	cout << Graph.schedule[0][2][0].arrive << endl;
+	cout << Graph.schedule[0][4][0].arrive << endl;
+
 	cout << "Please input where you're departing from" << endl;
 	string d;
 	cin >> d;

@@ -15,37 +15,15 @@ Map::Map(string filename){
 
 	//cout << "file taken" << endl;
 
-	vector<string> path;
-	string temp;
-//	Flight temp2("", "", "", "", "");
 	while(getline(file, line)){
-		path.resize(0);
-		//vector<string> path;
+		//path.resize(0);
+		vector<string> path;
 		istringstream iss(line);
 		for(string s; iss >> s;){
-			temp = s;
-			cout << temp << endl;
-			path.push_back(temp);
-			//cout << path.back() << endl;
+			path.push_back(s);
 		}
-		cout << "\n" << endl;
-		flights.push_back(new Flight(path[0], path[1], path[2], path[3], path[4]));
-		
-		//temp2 = Flight(path[0], path[1], path[2], path[3], path[4]);
-		cout << path[3] << endl;
-		
-		//flights.push_back(temp2);
-		cout << flights.back().arrive << endl;
-
-		path[0] = "";
-		path[1] = "";
-		path[2] = "";
-		path[3] = "";
-		path[4] = "";
-		
+		flights.push_back(Flight(path[0], path[1], path[2], path[3], path[4]));
 	}
-	
-	cout << "\n\n\n" << endl;
 
 	//cout << "Flights" << endl;
 	
@@ -122,11 +100,6 @@ list<Flight> Map::anypath(int start, int end){
 				earliest = schedule[start][i].at(j).arrive;
 				shortestTime[i] = earliest;
 				prevFlight[i] = schedule[start][i].at(j);
-
-				cout << prevFlight[i].to << endl;
-				cout << prevFlight[i].arrive << endl; //Testing time
-				cout << "\n" << endl;
-
 				visitedNodes[i] = 1;
 			}
 		}
@@ -135,12 +108,6 @@ list<Flight> Map::anypath(int start, int end){
 	
 //	cout << "Behind second for loop" <<endl;
 
-	for(int i=0; i < cities.size() ; i++){
-		cout << cities[i] << endl;
-	}
-
-	cout << "\n" << endl;
-
 	while(NodesRemain(visitedNodes)){
 		int closest;
 		int distance = INT_MAX;
@@ -148,13 +115,10 @@ list<Flight> Map::anypath(int start, int end){
 			if(visitedNodes[i] == 1 && shortestTime[i] < distance){
 				closest = i;
 				distance = shortestTime[i];
-
 			}
 		}
-
-
-		cout << cities[closest] << endl; // checks the order the cities are discovered in
-
+		
+//		cout << "inbetweener" << endl;
 
 		int arrivalTime = prevFlight[closest].arrive;
 		visitedNodes[closest] = 2;
@@ -174,20 +138,18 @@ list<Flight> Map::anypath(int start, int end){
 
 	}
 
-	cout << "After massive while loop" <<endl;
+//	cout << "After massive while loop" <<endl;
 	// RETURN VALUE
 
 	list<Flight> answer;
 	answer.push_front(prevFlight[end]);
 	int g;
 	while(findCity(answer.front().from) != start){
-		cout << "\n" << endl;
-//		cout << cities[g] <<endl;
+		cout << g <<endl;
 		g = findCity(answer.front().from);
-		cout << cities[g] << endl;
 		answer.push_front(prevFlight[g]);
 	}
-	
+
 	return answer;
 	// FIGURE OUT RETURN VALUE
 
