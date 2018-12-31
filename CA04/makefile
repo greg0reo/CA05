@@ -16,4 +16,5 @@ Card.o: Card.cpp Card.h
 	g++ -g -c Card.cpp
 
 clean:
-	rm -f *.o File.exe
+	rm -f *.o File.exe Log.txt
+

@@ -292,19 +292,14 @@ void Map::translate(list<Flight *> t){
 	int totalcost;
 	int starttime;
 	int endtime;
-	totalcost = findPrice(t);
-	if(totalcost >= 99999){
-		cout << "There are no flights to your destination" << endl;
-	}else{
-		cout << "The flights you will take are: " << endl;
-		for(auto i : t){
-			cout << i->from << " (" << i->depart <<  ") -> " << i->to << " (" << i->arrive << ")  $" << i->price << "\n" << endl;
-			//totalcost += i->price;
-		}
-		//totalcost = findPrice(t);
-		cout << "total price: " << endl;
-		cout << totalcost << endl;
+	cout << "The flights you will take are: " << endl;
+	for(auto i : t){
+		cout << i->from << " (" << i->depart <<  ") -> " << i->to << " (" << i->arrive << ")  $" << i->price << "\n" << endl;
+		//totalcost += i->price;
 	}
+	totalcost = findPrice(t);
+	cout << "total price: " << endl;
+	cout << totalcost << endl;
 }
 
 

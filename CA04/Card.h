@@ -16,6 +16,7 @@ public:
 	bool operator == (Card const &obj){
 		if(n == obj.n){return true;} else {return false;}
 	}
+	string reader();
 
 };
 

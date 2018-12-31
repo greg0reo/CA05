@@ -1,7 +1,6 @@
 #include "Tournament.h"
 #include <ctime>
 #include <iostream>
-#include <fstream>
 #include <chrono>
 #include <bits/stdc++.h>
 
@@ -42,10 +41,9 @@ Player Tournament::bracket(vector<Player> input){
 }
 
 Player Tournament::war(Player one, Player two){
-	cout << "Game between " << one.getName() << " and " << two.getName() << endl;
+	cout << "game between " << one.getName() << " and " << two.getName() << endl;
 	int battle = 0;
 	int war = 0;
-	string logThis;
 	Card randDeck[] = {Card(2, "H"), Card(2, "D"), Card(2, "S"), Card(2, "C"),
 				Card(3 , "H"), Card(3 , "D"), Card( 3, "S"), Card( 3, "C"),
 				Card(4 , "H"), Card(4 , "D"), Card( 4, "S"), Card( 4, "C"),
@@ -71,14 +69,14 @@ Player Tournament::war(Player one, Player two){
 	unsigned finally = timererer.count(); 
 */
 //	int finally = rand() % 1;
-	unsigned seed = rand() % 3;
+	unsigned seed = rand() % 100;
 
 
 //	auto temper = begin(randDeck);
 //	auto temper2 = end(randDeck);
 	shuffle(begin(randDeck), end(randDeck), default_random_engine(seed));
 //	shuffle(temper, temper2, default_random_engine(seed));
-//	cout << randDeck[2].n << randDeck[2].f << endl;
+	cout << randDeck[2].n << randDeck[2].f << endl;
 
 	for(int i = 0; i < 52; i += 2){
 		one.deck.push_front( randDeck[i]);
@@ -109,16 +107,7 @@ Player Tournament::war(Player one, Player two){
 				}
 			}
 			// TWO WINS WAR
-			if(one.deck.front() < two.deck.front()){
-
-				cout << two.getName() << " wins the war with a " << two.deck.front().reader() << " against " << one.getName() << "'s " << one.deck.front().reader() << endl;
-				logThis += two.getName();
-				logThis += "wins the war with a ";
-				logThis += two.deck.front().reader();
-				logThis += " against ";
-				logThis += one.deck.front().reader();
-				logThis += "\n";
-
+			if(one.deck.front() < two.deck.front()){ 
 				temp.push_back(one.deck.front());
 				temp.push_back(two.deck.front());
 				one.deck.pop_front();
@@ -129,15 +118,6 @@ Player Tournament::war(Player one, Player two){
 				}
 			// ONE WINS WAR
 			}else{
-
-				cout << one.getName() << " wins the war with a " << one.deck.front().reader() << " against " << two.getName() << "'s " << two.deck.front().reader() << endl;
-				logThis += one.getName();
-				logThis += "wins the war with a ";
-				logThis += two.deck.front().reader();
-				logThis += " against ";
-				logThis += one.deck.front().reader();
-				logThis += "\n";
-
 				temp.push_back(one.deck.front());
 				temp.push_back(two.deck.front());
 				one.deck.pop_front();
@@ -151,17 +131,15 @@ Player Tournament::war(Player one, Player two){
 
 		// TWO WINS
 		}else if(one.deck.front() < two.deck.front()){
+			cout << two.name << " wins the war with  
 			temp.push_back(one.deck.front());
 			temp.push_back(two.deck.front());
 			one.deck.pop_front();
-			two.deck.pop_front();	
+			two.deck.pop_front();
+
+		
 			//LOG
-
-			cout << two.getName() << " wins the draw" << endl;
-			logThis += two.getName();
-			logThis += " wins the draw\n";
-
-
+			
 			for(const Card& i : temp){
 				two.deck.push_back(i);
 			}
@@ -172,11 +150,7 @@ Player Tournament::war(Player one, Player two){
 			one.deck.pop_front();
 			two.deck.pop_front();
 			//LOG
-
-			cout << one.getName() << " wins the draw" << endl;
-			logThis += one.getName();
-			logThis += " wins the draw\n";
-
+			
 			for(const Card& i : temp){
 				one.deck.push_back(i);
 			}
@@ -196,31 +170,13 @@ Player Tournament::war(Player one, Player two){
 		// TWO WINS
 		//LOG
 		two.setGames( two.getGames()+1);
-		cout << two.getName() << " won\n" << endl;
-		logThis += two.getName();
-		logThis += " won\n";
-
-		ofstream logger;
-		logger.open("Log.txt", ios::app);
-		logger << logThis;
-		logger.close();
-//		logger.write((char*)&logThis, sizeof(logThis));
-
+		cout << two.getName() << " won" << endl;
 		return two;
 	}else{
 		//ONE WINS
 		//LOG
 		one.setGames( one.getGames()+1);
-		cout << one.getName() << " won\n" << endl;
-		logThis += one.getName();
-		logThis += " won\n";
-
-		ofstream logger;
-		logger.open("Log.txt", ios::app);
-		logger << logThis;
-		logger.close();
-//		logger.write((char*)&logThis, sizeof(logThis));
-
+		cout << one.getName() << " won" << endl;
 		return one;
 	}
 
