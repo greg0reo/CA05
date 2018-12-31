@@ -37,10 +37,12 @@ int main(int argc, char *argv[]){
 	if(path == 1){
 		thisThing = Graph.anypath(Graph.findCity(d), Graph.findCity(a));
 //		Graph.translate(&Graph.anypath(Graph.findCity(d), Graph.findCity(a)));
-		cout << "do I get here?" << endl;
+//		cout << "do I get here?" << endl;
 		Graph.translate(thisThing);
 	}else{
+		thisThing = Graph.fastpath(Graph.findCity(d), Graph.findCity(a));
 	//	Graph.fastpath(Graph.findCity(d), Graph.findCity(a));
+		Graph.translate(thisThing);
 	}
 
 

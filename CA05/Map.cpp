@@ -217,9 +217,8 @@ list<Flight *> Map::anypath(int start, int end){
 
 }
 
+
 list<Flight *> Map::fastpath(int start, int end){
-	
-list<Flight *> Map::anypath(int start, int end){
 //	cout << "anypath" << endl;
 	vector<int> shortestTime;
 	vector<int> visitedNodes;
@@ -415,7 +414,7 @@ list<Flight *> Map::anypath(int start, int end){
 	return answer;
 	// FIGURE OUT RETURN VALUE
 */
-}
+
 
 void Map::translate(list<Flight *> t){
 	int totalcost;
