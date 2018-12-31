@@ -218,6 +218,135 @@ list<Flight *> Map::anypath(int start, int end){
 }
 
 list<Flight *> Map::fastpath(int start, int end){
+	
+list<Flight *> Map::anypath(int start, int end){
+//	cout << "anypath" << endl;
+	vector<int> shortestTime;
+	vector<int> visitedNodes;
+	vector<Flight *> prevFlight;
+	int length;
+	for(int i = 0; i < cities.size(); i++){
+		if(i == start){
+			shortestTime.push_back(0);
+			visitedNodes.push_back(2);
+		}else{
+			shortestTime.push_back(INT_MAX);
+			visitedNodes.push_back(0);
+		}
+		length = i;
+		//prevFlight.push_back(NULL);
+		prevFlight.push_back(new Flight(cities[start], cities[i], "999999", "999999", "999999"));
+	}
+	//prevFlight.resize(length);
+//	cout << start << endl;
+//	cout << end << endl;
+
+	for(int i = 0; i < cities.size() ; i++){
+		int earliest = INT_MAX;
+		for(int j = 0; j < schedule[start][i].size(); j++){
+			if(schedule[start][i].at(j)->arrive < earliest){
+
+//  				cout << schedule[start][i].at(j)->from << schedule[start][i].at(j)->depart << schedule[start][i].at(j)->to << schedule[start][i].at(j)->arrive << endl;
+//				cout << start << cities[start] <<endl;
+//				cout << i << " i"<< endl;
+//				cout << findCity("Yonkers") << cities[findCity("Yonkers")] << endl;
+				earliest = schedule[start][i].at(j)->arrive;
+				shortestTime[i] = earliest;
+				prevFlight[i] = schedule[start][i].at(j);
+//				cout << i << endl;
+//				cout << prevFlight[i]->from << prevFlight[i]->depart << " -> " << prevFlight[i]->to << prevFlight[i]->arrive << endl;
+//				cout << "1111111" << endl;
+//				cout << prevFlight[i]->to << endl;
+//				cout << prevFlight[i]->arrive << endl; //Testing time
+//				cout << "\n" << endl;
+
+				visitedNodes[i] = 1;
+//				cout << i << endl;
+			}
+		}
+	}
+	visitedNodes[start] = 1;
+	
+//	cout << "Behind second for loop" <<endl;
+
+	for(int i=0; i < cities.size() ; i++){
+//		cout << cities[i] << endl;
+	}
+
+//	cout << "\n" << endl;
+
+	while(NodesRemain(visitedNodes)){
+		int closest;
+		int distance = INT_MAX;
+		for(int i = 0; i < cities.size(); i++){
+			if(visitedNodes[i] == 1 && shortestTime[i] < distance){
+				closest = i;
+				distance = shortestTime[i];
+
+			}
+		}
+
+
+//		cout << cities[closest] << endl; // checks the order the cities are discovered in
+
+
+		int arrivalTime = prevFlight[closest]->arrive;
+		visitedNodes[closest] = 2;
+//		cout << cities[closest] << "\n" << endl;
+
+		for(int i = 0; i < cities.size(); i++){
+			int earliest = shortestTime[i];
+			for(int j = 0; j < schedule[closest][i].size(); j++){
+				//int earliest = shortestTime[i];
+
+ // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(schedule[closest][i].at(j)->arrive < earliest && arrivalTime < schedule[closest][i].at(j)->depart){  // || schedule[closest][i].at(j).depart > arrivalTime){
+					earliest = schedule[closest][i].at(j)->arrive;
+					shortestTime[i] = earliest;
+					prevFlight[i] = schedule[closest][i].at(j);
+//					cout << prevFlight[i]->from << prevFlight[i]->depart << " -> " << prevFlight[i]->to << prevFlight[i]->arrive << endl;
+					visitedNodes[i] = 1;
+					//visitedNodes[i] = false;
+				}
+			}
+		}
+
+	}
+
+//	cout << "After massive while loop" <<endl;
+	// RETURN VALUE
+
+	list<Flight *> answer;
+	answer.push_front(prevFlight[end]);
+	int g;
+	int greg = 0;
+	while(findCity(answer.front()->from) != start){
+//		cout << "\n" << endl;
+//		cout << cities[g] <<endl;
+		g = findCity(answer.front()->from);
+//		cout << cities[g] << endl;
+		answer.push_front(prevFlight[g]);
+//		cout << prevFlight[g]->from << "\n" << endl;
+//		greg++;
+//		if(greg == 100){
+//			break;
+//		}
+//		cout << "stuck here for ever" << endl;
+	}
+	
+	return answer;
+	// FIGURE OUT RETURN VALUE
+
+
+}
+
+	
+	
+	
+	
+	
+	
+	
 /*	vector<int> shortestTime;
 	vector<bool> visitedNodes;
 	vector<Flight> prevFlight;
