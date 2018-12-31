@@ -11,8 +11,30 @@ Tournament::Tournament(vector<Player> input){
 	this->players = input;
 }
 
-Tournament::Tournament(string player_file, string log_file){
+Tournament::Tournament(string player_file){
+	vector<Player*> input;
+	string temp;
+	string line;
+	fstream file(player_file);
+	while(getline(file, line)){
+		istringstream iss(line);
+//		iss >> temp;
+		for( string s; iss>>s;){
+			temp = s;
+		}
+//		temp = line;
+		input.push_back(new Player(temp, 0));
 
+	}
+	vector<Player> input2;
+	for(auto i : input){
+		input2.push_back(*i);
+	}
+	this->players = input2;
+}
+
+vector<Player> Tournament::getPlayers(){
+	return this->players;
 }
 
 Player Tournament::bracket(vector<Player> input){

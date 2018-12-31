@@ -25,7 +25,7 @@ private:
 
 public:
 	Tournament(vector<Player> input);
-	Tournament(string player_file, string log_file);
+	Tournament(string player_file);
 	Player bracket(vector<Player> input);
 	Player war(Player one, Player two);
 	void log(string logThis, string log_file);
@@ -40,7 +40,7 @@ public:
 	void setAvg(int n);
 	int getAvg();
 	string getLog();
-
+	vector<Player> getPlayers();
 };
 
 

@@ -22,10 +22,18 @@ int main(int argc, char *argv[]){
 
 
 
-	Tournament theGame = Tournament(People);
+//	Tournament theGame = Tournament(People);
+	
+//	theGame.bracket(People);
 
-	theGame.bracket(People);
+	cout << "What file are you reading from?" << endl;
+	string i;
+	cin >> i;
 
+	Tournament theGame = Tournament(i);
+	vector<Player> swaggy;
+	swaggy = theGame.getPlayers();
+	theGame.bracket(swaggy);
 
 
 
