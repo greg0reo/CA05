@@ -2,13 +2,17 @@
 #define TOURNAMENT_H
 
 #include <string>
-
+#include <stdio.h>
+#include <stdlib.h>
 #include <vector>
 #include <array>
 #include <algorithm>
 #include <random>
 #include "Player.h"
 #include "Card.h"
+
+
+using namespace std;
 
 class Tournament{
 private:
@@ -20,9 +24,9 @@ private:
 	string log_file;
 
 public:
-	Tournament(vector<Players> input);
+	Tournament(vector<Player> input);
 	Tournament(string player_file, string log_file);
-	Player bracket(vector<Players> input);
+	Player bracket(vector<Player> input);
 	Player war(Player one, Player two);
 	void log(string logThis, string log_file);
 	
@@ -41,3 +45,4 @@ public:
 
 
 
+#endif

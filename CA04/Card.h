@@ -3,16 +3,20 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class Card{
 public:
 	int n;
-	string f;
+	std::string f;
 	Card(int j, string k);
-	Card operator < (Card const &obj){
+	bool operator < (Card const &obj){
 		if(n < obj.n){ return true;} else {return false;}
 	}
-	Card operator == (Card const &obj){
+	bool operator == (Card const &obj){
 		if(n == obj.n){return true;} else {return false;}
 	}
 
 };
+
+#endif

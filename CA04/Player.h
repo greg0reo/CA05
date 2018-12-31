@@ -5,6 +5,8 @@
 #include <string>
 #include "Card.h"
 
+using namespace std;
+
 class Player{
 private:
 	string name;
@@ -19,3 +21,5 @@ public:
 	void setGames(int n);
 
 };
+
+#endif

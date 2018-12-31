@@ -13,9 +13,9 @@ int main(int argc, char *argv[]){
 	cin >> place;
 	Map Graph = Map(place);
 
-	cout << Graph.schedule[0][1][0].arrive << endl;
-	cout << Graph.schedule[0][2][0].arrive << endl;
-	cout << Graph.schedule[0][4][0].arrive << endl;
+	cout << "Here I am, and here I say" << endl;
+//	cout << Graph.schedule[0][2][0]->arrive << endl;
+//	cout << Graph.schedule[0][4][0]->arrive << endl;
 
 	cout << "Please input where you're departing from" << endl;
 	string d;
@@ -31,10 +31,16 @@ int main(int argc, char *argv[]){
 	cin >> pather;
 	path = stoi(pather);
 
+
+	list<Flight *> thisThing;
+
 	if(path == 1){
-		Graph.translate(Graph.anypath(Graph.findCity(d), Graph.findCity(a)));
+		thisThing = Graph.anypath(Graph.findCity(d), Graph.findCity(a));
+//		Graph.translate(&Graph.anypath(Graph.findCity(d), Graph.findCity(a)));
+		cout << "do I get here?" << endl;
+		Graph.translate(thisThing);
 	}else{
-		Graph.fastpath(Graph.findCity(d), Graph.findCity(a));
+	//	Graph.fastpath(Graph.findCity(d), Graph.findCity(a));
 	}
 
 

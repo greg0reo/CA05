@@ -1,8 +1,12 @@
 #include "Tournament.h"
+#include <ctime>
+#include <iostream>
+#include <chrono>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-Tournament::Tournament(vector<Players> input){
+Tournament::Tournament(vector<Player> input){
 	this->players = input;
 }
 
@@ -10,21 +14,34 @@ Tournament::Tournament(string player_file, string log_file){
 
 }
 
-Player Tournament::bracket(vector<Players> input){
+Player Tournament::bracket(vector<Player> input){
+	
 	if(input.size() == 2){
 		return war(input[0], input[1]);
+	}
+	vector<Player> next;
+	for(int i = 0; i < input.size() ; i+=2){
+		next.push_back(war(input.at(i), input.at(i+1)));
+	}
+	return bracket(next);
+
+/*	if(input.size() == 2){
+		war(input[0], input[1]);
 	}else{
-		vector<Players> one;
-		vector<Players> two;
-		for(i= 0, i < input.size(), i+= 2){
+		vector<Player> one;
+		vector<Player> two;
+		for(int i= 0; i < input.size(); i+= 2){
 			one.push_back(input[i]);
 			two.push_back(input[i+1]);
 		}
+//		cout << "Pre war" << endl;
 		war(bracket(one), bracket(two));
 	}
+*/
 }
 
 Player Tournament::war(Player one, Player two){
+	cout << "game between " << one.getName() << " and " << two.getName() << endl;
 	int battle = 0;
 	int war = 0;
 	Card randDeck[] = {Card(2, "H"), Card(2, "D"), Card(2, "S"), Card(2, "C"),
@@ -40,9 +57,28 @@ Player Tournament::war(Player one, Player two){
 				Card(12 , "H"), Card(12 , "D"), Card( 12, "S"), Card( 12, "C"),
 				Card(13 , "H"), Card(13 , "D"), Card( 13, "S"), Card( 13, "C"),
 				Card(14 , "H"), Card(14 , "D"), Card( 14, "S"), Card( 14, "C")};
-	unsigned seed = 0;
-	shuffle(randDeck.begin(), randDeck.end(), default_random_engine(seed));
-	for(i = 0, i < 52, i += 2){
+
+
+	// FOr some reason, this random doesn't work. I'm tying it to the time so that it becomes more random
+
+/*	std::chrono::time_point<std::chrono::system_clock> time;
+	time = std::chrono::system_clock::now();
+	auto timer = std::chrono::time_point_cast<std::chrono::milliseconds>(time);
+	auto timerer = timer.time_since_epoch();
+	auto timererer = std::chrono::duration_cast<std::chrono::milliseconds>(timerer);
+	unsigned finally = timererer.count(); 
+*/
+//	int finally = rand() % 1;
+	unsigned seed = rand() % 3;
+
+
+//	auto temper = begin(randDeck);
+//	auto temper2 = end(randDeck);
+	shuffle(begin(randDeck), end(randDeck), default_random_engine(seed));
+//	shuffle(temper, temper2, default_random_engine(seed));
+	cout << randDeck[2].n << randDeck[2].f << endl;
+
+	for(int i = 0; i < 52; i += 2){
 		one.deck.push_front( randDeck[i]);
 		two.deck.push_front( randDeck[i+1]);
 	}
@@ -50,6 +86,7 @@ Player Tournament::war(Player one, Player two){
 	vector<Card> temp;
 	while(one.deck.size() != 0 && two.deck.size() != 0){
 		//WAR!!
+
 		if(one.deck.front() == two.deck.front()){
 			if(one.deck.size() == 1) {
 				one.deck.pop_front();
@@ -59,7 +96,7 @@ Player Tournament::war(Player one, Player two){
 				two.deck.pop_front();
 				break;
 			}
-			for(i = 0; i < 4; i++){
+			for(int i = 0; i < 4; i++){
 				if(one.deck.size() > 1){
 					temp.push_back(one.deck.front());
 					one.deck.pop_front();
@@ -85,7 +122,7 @@ Player Tournament::war(Player one, Player two){
 				temp.push_back(two.deck.front());
 				one.deck.pop_front();
 				two.deck.pop_front();
-				//LOG				
+				//LOG
 				for(const Card& i : temp){
 					one.deck.push_back(i);
 				}
@@ -93,12 +130,12 @@ Player Tournament::war(Player one, Player two){
 
 
 		// TWO WINS
-		}elseif(one.deck.front() < two.deck.front()){
+		}else if(one.deck.front() < two.deck.front()){
 			temp.push_back(one.deck.front());
 			temp.push_back(two.deck.front());
 			one.deck.pop_front();
 			two.deck.pop_front();	
-			//LOG		
+			//LOG
 			
 			for(const Card& i : temp){
 				two.deck.push_back(i);
@@ -122,7 +159,7 @@ Player Tournament::war(Player one, Player two){
 
 
 	//update data
-	if(one.)
+	//if(one.)
 
 
 
@@ -130,11 +167,13 @@ Player Tournament::war(Player one, Player two){
 		// TWO WINS
 		//LOG
 		two.setGames( two.getGames()+1);
+		cout << two.getName() << " won" << endl;
 		return two;
 	}else{
 		//ONE WINS
 		//LOG
 		one.setGames( one.getGames()+1);
+		cout << one.getName() << " won" << endl;
 		return one;
 	}
 
